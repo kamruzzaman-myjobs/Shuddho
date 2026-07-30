@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block title %}Terms & Conditions | Shuddho{% endblock %}
+
+{% block extra_css %}
+<style>
+
+.policy-wrapper {
+    padding: 25px 0 60px;
+}
+
+.policy-box {
+    background: #ffffff;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border: 1px solid #eef2f7;
+}
+
+.policy-title {
+    font-weight: 700;
+    color: #111827;
+}
+
+.policy-intro {
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+.policy-section h5 {
+    font-weight: 600;
+    margin-top: 25px;
+    color: #333;
+}
+
+.policy-section p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.policy-contact {
+    background: #ECECEC;
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 25px;
+    font-weight: 500;
+}
+
+.policy-contact a {
+    color: #16a34a;
+    text-decoration: none;
+}
+
+.policy-contact a:hover {
+    text-decoration: underline;
+}
+
+
+@media(max-width:576px){
+
+    .policy-wrapper{
+        padding:20px 12px 40px;
+    }
+
+    .policy-box{
+        padding:25px 20px;
+        border-radius:10px;
+    }
+
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="policy-wrapper">
+
+    <div class="container">
+
+        <div class="policy-box">
+
+            <h2 class="policy-title mb-3">
+                Terms & Conditions
+            </h2>
+
+            <p class="policy-intro">
+                Before purchasing from <strong>Shuddho</strong>, please read the
+                following Terms & Conditions carefully. By using our website
+                and placing an order, you agree to follow these terms.
+            </p>
+
+
+            <div class="policy-section">
+
+                <h5>📝 Order Confirmation</h5>
+                <p>
+                    Customers must provide accurate information including name,
+                    phone number, and complete delivery address while placing an order.
+                    MuradMart will not be responsible for delivery failure caused by
+                    incorrect or incomplete information.
+                </p>
+
+
+                <h5>🚚 Delivery Charges</h5>
+                <p>
+                    Delivery charges may vary depending on the product type and
+                    delivery location. The applicable delivery charge will be added
+                    to the total order amount.
+                </p>
+
+
+                <h5>🔍 Product Receiving</h5>
+                <p>
+                    Customers are requested to check the product carefully at the
+                    time of delivery. Any issue should be reported immediately
+                    after receiving the product.
+                </p>
+
+
+                <h5>📦 Return Policy</h5>
+                <p>
+                    Products can be returned if they are damaged, defective, or
+                    significantly different from the product description, subject
+                    to our return policy conditions and applicable delivery charges.
+                </p>
+
+
+                <h5>💳 Payment Terms</h5>
+                <p>
+                    We provide convenient payment options including Cash on Delivery.
+                    Customers must complete payment according to the selected
+                    payment method.
+                </p>
+
+
+                <h5>🔒 Website Usage</h5>
+                <p>
+                    Users must use our website responsibly and must not attempt
+                    any activity that may harm the website, services, or other users.
+                </p>
+
+            </div>
+
+
+            <div class="policy-contact">
+                📞 <a href="tel:+8801852677251">+880 1852-677251</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+
+<ul class="shop-category-menu">
+    {% for cat in menu_categories %}
+    <li class="shop-cat-item">
+        <a href="{% url 'product_list_by_category' cat.slug %}" class="shop-cat-link">
+            {% if cat.image %}
+                <img src="{{ cat.image.url }}" alt="" class="shop-cat-icon">
+            {% else %}
+                <i class="fas fa-tag shop-cat-icon-fallback"></i>
+            {% endif %}
+            <span>{{ cat.name }}</span>
+            {% if cat.children.all %}
+                <i class="fas fa-chevron-right shop-cat-arrow"></i>
+            {% endif %}
+        </a>
+
+        {% if cat.children.all %}
+        <div class="shop-flyout shop-flyout-level2">
+            <ul>
+                {% for sub in cat.children.all %}
+                <li class="shop-cat-item">
+                    <a href="{% url 'product_list_by_category' sub.slug %}" class="shop-cat-link">
+                        <span>{{ sub.name }}</span>
+                        {% if sub.children.all %}
+                            <i class="fas fa-chevron-right shop-cat-arrow"></i>
+                        {% endif %}
+                    </a>
+
+                    {% if sub.children.all %}
+                    <div class="shop-flyout shop-flyout-level3">
+                        <ul>
+                            {% for subsub in sub.children.all %}
+                            <li class="shop-cat-item">
+                                <a href="{% url 'product_list_by_category' subsub.slug %}" class="shop-cat-link">
+                                    <span>{{ subsub.name }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}E-Commerce Store{% endblock %}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}Shuddho — Bangladesh's trusted online shop for groceries, food, baby care, beauty, and home essentials with fast home delivery nationwide.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}online grocery Bangladesh, Shuddho, home delivery Dhaka, buy food online{% endblock %}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph / Social Share -->
+    <meta property="og:title" content="{% block og_title %}Shuddho{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Shop groceries, food, beauty & home essentials online with fast delivery across Bangladesh.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/og-default.png' %}{% endblock %}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    {% csrf_token %}
+    {% block extra_css %}{% endblock %}
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --primary-dark: #5a0cb8;
+            --primary-light: #7c4ddb;
+            --secondary-color: #2575fc;
+            --text-color: #333333;
+            --text-light: #6c757d;
+            --bg-light: #f8f9fa;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+html, body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: #ECECEC;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.site-header,
+.main-header,
+.category-bar {
+    width: 100%;
+    left: 0;
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3000;
+}
+/*-------------------- Navbar styling------------------------------*/
+
+/* AFTER */
+.parent-marquee {
+    background: #3c8c00;
+    padding: 0 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.top-marquee {
+    background: #3c8c00;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.marquee-hotline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-left: 16px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+}
+
+.marquee-hotline i {
+    color: #741010;
+}
+
+.marquee-hotline a {
+    color: #181616;
+    text-decoration: none;
+}
+
+.marquee-hotline a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .marquee-hotline {
+        display: inline-block;
+    }
+}
+.marquee-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marqueeMove 30s linear infinite;
+}
+@keyframes marqueeMove {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+.top-marquee marquee {
+    padding: 0 10px;   
+}
+
+/*-----------------mesages----------------------------*/
+#toastContainer{
+
+    position:fixed;
+    top:90px;
+    right:18px;
+    z-index:99999;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.custom-toast{
+    min-width:280px;
+    max-width:340px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 16px;
+    background:#fff;
+    border-left:5px solid #3c8c00;
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(0,0,0,.14);
+    animation:toastSlide .45s ease;
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+}
+
+.custom-toast.success{
+    border-color:#22c55e;
+}
+
+.custom-toast.error{
+    border-color:#ef4444;
+}
+
+.custom-toast.warning{
+    border-color:#f59e0b;
+}
+
+.custom-toast.info{
+    border-color:#2563eb;
+}
+
+.toast-icon{
+    font-size:20px;
+    flex-shrink:0;
+}
+
+.success .toast-icon{
+    color:#22c55e;
+}
+
+.error .toast-icon{
+    color:#ef4444;
+}
+
+.warning .toast-icon{
+    color:#f59e0b;
+}
+
+.info .toast-icon{
+    color:#2563eb;
+}
+
+.toast-text{
+    flex:1;
+    font-size:14px;
+    font-weight:500;
+    line-height:1.4;
+}
+
+.toast-close{
+    background:none;
+    border:none;
+    color:#999;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.toast-close:hover{
+    color:#000;
+}
+
+.toast-hide{
+    opacity:0;
+    transform:translateX(120%);
+    pointer-events:none;
+}
+
+@keyframes toastSlide{
+    from{
+        opacity:0;
+        transform:translateX(120%);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+@media(max-width:768px){
+
+#toastContainer{
+    right:10px;
+    left:10px;
+    top:75px;
+}
+
+.custom-toast{
+    min-width:100%;
+    max-width:100%;
+}
+}
+
+/* ----------------- MAIN HEADER ------------------- */
+.main-header {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    height: 45px;
+}
+
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;        
+    margin-left: 20px; 
+}
+
+/* ================= Brand Logo ================= */
+.brand-logo {
+    display: inline-block;
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.mobile-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+.desktop-logo{
+    display:flex;
+    align-items:center;
+    display:inline-block;
+}
+.mobile-top-bar{
+    display:none;
+}
+
+.sidebar-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-logo {
+    height: 55px;
+    width: auto;
+    margin-bottom: 12px;
+}
+
+@media (max-width:767px){
+    .brand-logo{
+        height:32px;
+    }
+
+    .mobile-logo-img{
+        height:30px;
+    }
+
+    .footer-logo{
+        height:46px;
+    }
+    .desktop-logo{
+        display:none !important;
+    }
+
+    .mobile-top-bar{
+        display:flex !important;
+    }
+
+}
+@media (min-width:768px){
+
+    .mobile-top-bar{
+        display:none !important;
+    }
+
+    .desktop-logo{
+        display:flex;
+    }
+}
+
+.search-form {
+    flex: 1;
+    max-width: 520px;
+    margin: 0 40px;
+    display: flex;
+}
+
+.search-form input {
+    width: 100%;
+    height: 34px;
+    padding: 5px 12px;
+    border: 1px solid #3c8c00;
+    border-right: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-form button {
+    background: #3c8c00;
+    border: none;
+    height: 34px;
+    padding: 0 16px;
+    color: #fff;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 28px;         
+    margin-right: 20px;
+}
+
+.action-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.action-link:hover {
+    color: #3c8c00;
+}
+
+.register-btn {
+    background: #3c8c00;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 3px;
+}
+
+.cart-link {
+    position: relative;
+    font-size: 16px;
+    color: #1b7f00;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #3c8c00;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+.mobile-top-bar{
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    width:100%;
+    padding:8px 10px;
+}
+.mobile-top-bar .brand-logo{
+    height:34px;
+    width:auto;
+    display:block;
+}
+.mobile-search-form{
+    flex:1;
+    margin:0 8px;
+}
+
+.menu-toggle{
+    flex-shrink:0;
+}
+
+
+/* --------- CATEGORY nav ----------- */
+.category-bar {
+    background: #3c8c00;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.category-menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    margin: 0 auto;
+    padding: 1px 16px;   
+    max-width: 1200px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.category-menu::-webkit-scrollbar {
+    display: none;              
+}
+.category-menu li {
+    flex-shrink: 0;
+}
+
+.category-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;     
+    white-space: nowrap;
+    padding: 2px 0;     
+    line-height: 1.2;
+}
+
+.category-menu a:hover {
+    text-decoration: underline;
+}
+
+/* ================= MOBILE HEADER ================= */
+.mobile-top-bar {
+    display: none !important;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 6px;
+}
+
+
+.menu-toggle {
+    background: #3c8c00;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .2s;
+}
+
+.menu-toggle:hover {
+    background: #2f6f00;
+}
+
+/* ---- Inline search bar (same row) ---- */
+.mobile-search-form {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+.mobile-search-form input {
+    flex: 1;
+    min-width: 0;
+    height: 38px;
+    border: 1px solid #3c8c00;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 0 10px;
+    font-size: 13px;
+    outline: none;
+}
+
+.mobile-search-form button {
+    background: #3c8c00;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+
+
+/* ================= MOBILE BOTTOM NAV ================= */
+
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    z-index: 2000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 0;
+    display: none;
+    flex: 1;
+}
+
+.mobile-bottom-nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+    text-align: center;
+}
+
+.mobile-bottom-nav i {
+    font-size: 18px;
+    display: block;
+}
+
+/* Center Home Button */
+.home-btn {
+    background: #3c8c00;
+    color: #fff !important;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: -30px 0 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.home-btn i {
+    font-size: 22px;
+}
+.mobile-cart .cart-count {
+    top: -6px;
+    right: -8px;
+}
+/* ================= MOBILE SIDEBAR ================= */
+
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background: #ffffff;
+    padding: 18px 16px;
+    z-index: 4100;
+    transition: 0.35s ease;
+    box-shadow: 4px 0 18px rgba(0,0,0,0.15);
+}
+
+.mobile-sidebar.active {
+    left: 0;
+}
+
+.mobile-sidebar a {
+    padding: 10px 4px;
+    font-size: 14px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.mobile-sidebar a:last-child {
+    border-bottom: none;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.sidebar-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #3c8c00;
+}
+
+.sidebar-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    color: #333;
+}
+
+.sidebar-close:hover {
+    color: #3c8c00;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 12px 0 16px;
+}
+
+.sidebar-subtitle {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1b7f00;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 11px 6px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: #f3f8ee;
+    color: #3c8c00;
+}
+
+.sidebar-link:last-child {
+    border-bottom: none;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    z-index: 4000;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+
+/* ================= RESPONSIVE(Header+navbar) ================= */
+
+/* Tablets & small laptops */
+@media (max-width: 991px) {
+    .parent-marquee {
+        padding: 0 100px;   
+    }
+    .logo {
+        display: none;
+    }
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-left {
+        margin-left: 0;
+        gap: 20px;
+    }
+
+    .search-form {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .header-actions {
+        margin-right: 0;
+        gap: 20px;
+    }
+
+    .category-menu {
+        justify-content: flex-start;
+        gap: 22px;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 767px) {
+    .parent-marquee {
+        padding: 0 40px;   
+    }
+    .top-marquee {
+        font-size: 13px;
+    }
+
+    .header-inner {
+        flex-direction: row;
+        align-items: center;
+        height: auto; 
+    }
+
+    /* Logo + nav row */
+    .logo {
+        text-align: center;
+        margin: 0;
+    }
+
+    .nav-left {
+        justify-content: center;
+        gap: 24px;
+        margin: 6px 0;
+    }
+
+    .header-actions {
+        justify-content: center;
+        gap: 22px;
+        
+    }
+
+    .category-menu {
+        padding: 10px 0;
+        gap: 20px;
+    }
+
+    .nav-left,
+    .header-actions,
+    .search-form {       
+        display: none;
+    }
+
+    .search-form {
+        max-width: 92%;    
+        margin: 4px auto;  
+    }
+
+    /* hide desktop items */
+    .nav-left,
+    .header-actions {
+        display: none;
+    }
+
+    .category-bar {
+        display: none;
+    }
+
+    /* show mobile header */
+/* show mobile header */
+    .mobile-top-bar {
+        display: flex !important;
+    }
+    .header-inner {
+        gap: 6px;
+    }
+    .header-inner.container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .mobile-bottom-nav {
+        display: flex;
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .action-link {
+        font-size: 13px;
+    }
+
+    .search-form input {
+        padding: 6px 11px;
+        font-size: 14px;
+    }
+
+    .category-menu a {
+        font-size: 13px;
+    }
+}
+
+
+
+/* ---------------- WhatsApp Floating Button ---------------- */ 
+
+.whatsapp-float{ position: fixed; left: 25px; bottom: 25px; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 28px; text-decoration: none; z-index: 9999; box-shadow: 0 6px 18px rgba(37,211,102,.4); animation: pulse 2s infinite; transition: all .3s ease; } /* Ripple Effect */ .whatsapp-float::before, .whatsapp-float::after{ content: ""; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(37,211,102,.4); z-index: -1; animation: ripple 2s infinite; } .whatsapp-float::after{ animation-delay: 1s; } /* Hover */ .whatsapp-float:hover{ color: #fff; background: #20ba5a; transform: scale(1.1); } /* Icon Pulse */ .whatsapp-icon{ animation: iconPulse 1.5s infinite; } /* Icon Small -> Large */ @keyframes iconPulse{ 0%{ transform: scale(1); } 50%{ transform: scale(1.2); } 100%{ transform: scale(1); } } /* Outer Circle Wave */ @keyframes ripple{ 0%{ transform: scale(1); opacity: .7; } 100%{ transform: scale(1.8); opacity: 0; } } /* Main Button Pulse */ @keyframes pulse{ 0%{ box-shadow: 0 0 0 0 rgba(37,211,102,.5); } 70%{ box-shadow: 0 0 0 20px rgba(37,211,102,0); } 100%{ box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+@media (max-width: 767px) {
+    .whatsapp-float {
+        bottom: 90px;   
+        left: 24px;
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
+    }
+}
+
+
+
+/* ================= Scroll To Top Button ================= */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 140px; /* WhatsApp button থেকে উপরে */
+    right: 22px;
+
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+
+    background: #3c8c00;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+
+    box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+    z-index: 1200;
+}
+
+#scrollTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#scrollTopBtn:hover {
+    background: #2f6f00;
+    transform: translateY(-2px);
+}
+
+
+/* ================= Footer styling ================= */
+.site-footer {
+    background: #f8fafc;
+    color: #374151;
+    padding: 45px 0 18px;
+    border-top: 1px solid #e5e7eb;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.footer-row > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.footer-title::after {
+    content: "";
+    width: 40px;
+    height: 2px;
+    background: #22c55e;
+    display: block;
+    margin-top: 6px;
+    border-radius: 2px;
+}
+
+.footer-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #6b7280;
+}
+
+.footer-address {
+    font-style: normal;
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: auto; 
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list li {
+    margin-bottom: 7px;
+}
+
+.footer-list a {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.92rem;
+    position: relative;
+}
+
+.footer-list a:hover {
+    color: #16a34a;
+
+}
+
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px 0;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: #4b5563;
+}
+
+.footer-contact i {
+    color: #22c55e;
+    width: 16px;
+}
+
+.footer-contact a {
+    color: #4b5563;
+    text-decoration: none;
+}
+
+.footer-contact a:hover {
+    color: #16a34a;
+}
+
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.footer-social a:nth-child(1) { color: #1877f2; } 
+.footer-social a:nth-child(2) { color: #1da1f2; } 
+.footer-social a:nth-child(3) { color: #e1306c; } 
+.footer-social a:nth-child(4) { color: #0a66c2; } 
+
+.footer-social a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+
+.footer-bottom {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 28px;
+    padding-top: 14px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin: 0;
+}
+
+
+@media (max-width: 992px) {
+    .site-footer {
+        padding: 42px 0 16px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .site-footer {
+        text-align: center;
+        padding: 32px 0 15px;
+    }
+
+    .footer-title::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-contact li {
+        justify-content: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+        margin-top: 12px;
+    }
+
+    .footer-address {
+        text-align: center;
+        margin-top: 12px;
+    }
+
+    .footer-list a:hover {
+        padding-left: 0;
+    }
+}
+
+
+
+    .alert {
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        border: none;
+    }
+    @media (max-width: 576px) {
+        footer {
+            text-align: center;
+        }
+
+        .social-icons {
+            justify-content: center;
+        }
+    }
+
+        
+ /* ================= PAYMENT METHODS ================= */
+.payment-section{
+    background:#ffffff;
+    padding:12px 0;
+    border-top:1px solid #e5e7eb;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.payment-img{
+    display:block;
+    margin:auto;
+    max-height:60px; 
+    max-width:100%;
+    width:760px;
+    height:auto;
+}
+
+@media (max-width:768px){
+
+    .payment-section{
+        padding:10px 10px;
+    }
+
+    .payment-img{
+        width:100%;
+        max-width:100%;
+        max-height:45px;
+    }
+
+}
+
+
+        /*------------mini-footer------------*/
+        .mini-footer {
+            background: #3c8c00;
+            padding: 8px 0;
+        }
+
+        .mini-footer p {
+            margin: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+
+        .mini-footer span {
+            font-weight: 600;
+            color: #eaffd0;
+        }
+
+
+        
+/* ================= SHOP CATEGORY FLYOUT MENU ================= */
+        .shop-category-sidebar {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            width: 260px;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+
+        .shop-category-menu {
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+        }
+
+        .shop-cat-item {
+            position: relative;
+        }
+
+        .shop-cat-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .shop-cat-link:hover {
+            background: #f3f8ee;
+            color: #1b7f00;
+        }
+
+        .shop-cat-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .shop-cat-icon-fallback {
+            width: 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        .shop-cat-link span {
+            flex: 0 1 auto;
+        }
+
+        .shop-cat-arrow {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        /* Flyout panel (level 2 & 3) - hidden by default */
+        .shop-flyout {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            min-width: 220px;
+            box-shadow: 8px 0 20px rgba(0,0,0,0.08);
+            z-index: 500;
+        }
+
+        .shop-flyout ul {
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+        }
+
+        /* hover এ flyout দেখাও */
+        .shop-cat-item:hover > .shop-flyout {
+            display: block;
+        }
+
+        /* Mobile এ hover কাজ করে না, তাই ছোট স্ক্রিনে flyout বন্ধ রাখো (পরে click-to-expand JS দিয়ে করা যাবে) */
+        @media (max-width: 991px) {
+            .shop-flyout {
+                display: none !important;
+            }
+            .shop-category-sidebar {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<!---cart-drawer / mobile sidebar -->
+<div id="mobileSidebar" class="mobile-sidebar">
+    
+    <div class="sidebar-header">
+            <img src="{% static 'images/shuddo-logo.png' %}"
+                 alt="Shuddho"
+                 class="brand-logo">
+        </a>
+        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <h4 class="sidebar-subtitle">Categories</h4>
+
+    <a href="{% url 'product_list' %}" class="sidebar-link">
+        All Products
+    </a>
+
+    {% for c in categories %}
+        <a href="{% url 'product_list_by_category' c.slug %}" class="sidebar-link">
+            {{ c.name }}
+        </a>
+    {% endfor %}
+</div>
+
+
+<div class="site-header">
+<div class="parent-marquee">
+<div class="top-marquee">
+    <div class="marquee-text">
+        Welcome to Shuddho ||
+        We provide reliable and trusted home delivery service across Bangladesh ||
+        No advance payment is required to place an order ||
+        Get 5% discount on advance bKash payment ||
+        Home delivery available nationwide within 3-5 days ||
+        Cash on Delivery facility is available ||
+        Thank You
+    </div>
+</div>
+
+<div class="marquee-hotline">
+    <i class="fas fa-phone-alt"></i>
+    <a href="tel:+8801852677251">01852-677251</a>
+</div>
+
+</div>
+<header class="main-header">
+        <div class="header-inner container">
+          
+        <!-- MOBILE TOP BAR -->
+        <div class="mobile-top-bar">
+            <a href="{% url 'home' %}" class="mobile-logo-wrap">
+                 <img src="{% static 'images/shuddo-logo.png' %}" 
+                      alt="Shuddho" 
+                      class="brand-logo">
+            </a> 
+
+            <form class="mobile-search-form" action="{% url 'product_list' %}" method="get">
+                <input type="search" name="search" placeholder="Search...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+
+            <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+            <!-- LOGO -->
+             <a href="{% url 'home' %}" class="desktop-logo">
+                <img src="{% static 'images/shuddo-logo.png' %}"
+                    alt="Shuddho"
+                    class="brand-logo">
+            </a>
+
+            <!-- LEFT NAV (Home, Products) -->
+            <div class="nav-left">
+                <a href="{% url 'home' %}" class="action-link">Home</a>
+                <a href="{% url 'product_list' %}" class="action-link">Products</a>
+            </div>
+
+            <!-- SEARCH -->
+            <form class="search-form" action="{% url 'product_list' %}" method="get">
+                <input type="search" name="search" placeholder="Search products...">
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <!-- RIGHT NAV (Cart, User) -->
+            <div class="header-actions">
+
+                <!-- CART -->
+                <a href="{% url 'cart_detail' %}" class="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" style="{% if not cart_items_count %}display:none;{% endif %}">{{ cart_items_count }}</span>
+                </a>
+
+                <!-- USER -->
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <a class="action-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle"></i> {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'profile' %}">
+                                <i class="fas fa-user me-2"></i> Profile
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" style="color:red" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="action-link">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="{% url 'register' %}" class="action-link register-btn">
+                    Register
+                </a>
+                {% endif %}
+
+            </div>
+    </div>
+</header>
+<nav class="category-bar">
+    <ul class="category-menu container">
+
+        <li>
+            <a href="{% url 'product_list' %}">All Products</a>
+        </li>
+
+        {% for c in categories|slice:":8" %}
+            <li>
+                <a href="{% url 'product_list_by_category' c.slug %}">
+                    {{ c.name }}
+                </a>
+            </li>
+        {% endfor %}
+
+    </ul>
+</nav>
+
+</div>
+
+
+{% if messages %}
+<div id="toastContainer">
+
+    {% for message in messages %}
+
+    <div class="custom-toast {{ message.tags }}">
+
+        <div class="toast-icon">
+
+            {% if message.tags == "success" %}
+                <i class="fas fa-check-circle"></i>
+
+            {% elif message.tags == "error" %}
+                <i class="fas fa-times-circle"></i>
+
+            {% elif message.tags == "warning" %}
+                <i class="fas fa-exclamation-triangle"></i>
+
+            {% else %}
+                <i class="fas fa-info-circle"></i>
+
+            {% endif %}
+
+        </div>
+
+        <div class="toast-text">
+
+            {{ message }}
+
+        </div>
+
+        <button class="toast-close">
+
+            <i class="fas fa-times"></i>
+
+        </button>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endif %}
+
+
+
+    <main class="container">
+
+        {% block content %}{% endblock %}
+
+        <!-- WhatsApp Floating Button -->
+        <a href="https://wa.me/8801852677251?text=Hello%20I%20need%20some%20information" class="whatsapp-float"
+            target="_blank" aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp whatsapp-icon"></i>
+        </a>
+
+    </main>
+
+
+
+<!--  Scroll To Top Button  --> 
+<button id="scrollTopBtn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<!-- footer -->   
+  <footer class="site-footer">
+    <div class="container">
+        <div class="row footer-row gy-4">
+
+            <!-- About / Brand -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Shuddho</h5>
+                <p class="footer-text">
+                    Shuddho is a trusted online shopping platform where you can find
+                    high-quality products at affordable prices with fast home delivery.
+                    We are committed to providing a safe, reliable, and hassle-free online shopping experience.
+                </p>
+                <address class="footer-address">
+                    Plot# 19, B/2-C&19, B/2-D Ring Road(Adabor), Flat# 4B, Mohammadpur,<br>
+                    Dhaka-1207, Bangladesh
+                </address>
+            </div>
+
+            <!-- Customer Service -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Customer Service</h5>
+                <ul class="footer-list">
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'return_refund' %}">Return & Refund</a></li>
+                </ul>
+            </div>
+
+            <!-- Useful Links -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Useful Links</h5>
+                <ul class="footer-list">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'product_list' %}">All Products</a></li>
+                    <!-- Useful Links -->
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}">My Account</a>
+                        {% else %}
+                            <a href="javascript:void(0);" onclick="alert('Please login or register first to access your account!')">
+                                My Account
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact & Social -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Contact Us</h5>
+
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:contact@eshop.com">shuddhoshopbd@gmail.com</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+8801234567890">+880 1852-677251</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        Dhaka, Bangladesh
+                    </li>
+                </ul>
+
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+
+                <p class="footer-text small mt-3">
+                    Stay connected with us to receive updates on new products,
+                    exclusive offers, and special discounts.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
+
+<!-- ================= PAYMENT METHODS ================= -->
+ <div class="payment-section">
+    <div class="container text-center">
+        <img src="{% static 'images/sslcommerz-payment.png' %}"
+             alt="SSLCommerz Payment Methods"
+             class="payment-img">
+    </div>
+</div>
+
+
+<!-- MINI FOOTER -->
+    <div class="mini-footer">
+        <div class="container">
+            <p>
+                Copyright © 2026 Shuddho. All rights reserved |
+                Developed By: <span>Almas Forhadi</span>
+            </p>
+        </div>
+    </div>
+
+
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block extra_js %}
+<!--- toggole/mobile sidebar -->
+<script>
+        function toggleSidebar() {
+            document.getElementById("mobileSidebar").classList.toggle("active");
+            document.getElementById("sidebarOverlay").classList.toggle("active");
+        }
+
+
+     /* === Scroll To Top Button ===== */
+        const scrollBtn = document.getElementById("scrollTopBtn");
+
+        // Show/hide button on scroll
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        });
+
+        // Smooth scroll to top
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+
+        /* Dynamic header height fix — gap/overlap কখনো হবে না */
+        function adjustHeaderSpacing() {
+            const header = document.querySelector('.site-header');
+            if (header) {
+                document.body.style.paddingTop = header.offsetHeight + 'px';
+            }
+        }
+        window.addEventListener('load', adjustHeaderSpacing);
+        window.addEventListener('resize', adjustHeaderSpacing);
+
+
+
+/* ===== Global Cart Count Sync — sob page-e always accurate thakবে ===== */
+function syncCartCount() {
+    fetch("{% url 'cart_count' %}", {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.querySelectorAll(".cart-count").forEach(function (el) {
+            el.textContent = data.count;
+            el.style.display = data.count > 0 ? "inline-block" : "none";
+        });
+    })
+    .catch(err => console.error("Cart count sync failed:", err));
+}
+
+// Normal page load-e sync koro
+document.addEventListener("DOMContentLoaded", syncCartCount);
+
+// Browser back/forward (bfcache) theke page restore hole abaro sync koro
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+        syncCartCount();
+    }
+});
+
+/* ================= FLOATING TOAST ================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    document.querySelectorAll(".custom-toast").forEach(function(toast){
+
+        const removeToast=function(){
+
+            toast.classList.add("toast-hide");
+
+            setTimeout(function(){
+
+                toast.remove();
+
+            },350);
+
+        };
+
+        setTimeout(removeToast,3000);
+
+        const closeBtn=toast.querySelector(".toast-close");
+
+        if(closeBtn){
+
+            closeBtn.addEventListener("click",removeToast);
+
+        }
+
+    });
+
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    function getCSRFToken() {
+        const match = document.cookie.match(/csrftoken=([^;]+)/);
+        return match ? match[1] : "";
+    }
+
+    function bindAddToCartButtons() {
+
+        document.querySelectorAll(".add-cart-btn").forEach(function(btn){
+
+            if(btn.dataset.bound==="1") return;
+            btn.dataset.bound="1";
+
+            if(btn.disabled) return;
+
+            btn.addEventListener("click", function(){
+
+                const productId=this.dataset.productId;
+                const original=this.innerHTML;
+
+                fetch(`/cart/add/${productId}/`,{
+                    method:"POST",
+                    headers:{
+                        "X-CSRFToken":getCSRFToken(),
+                        "X-Requested-With":"XMLHttpRequest"
+                    }
+                })
+                .then(r=>r.json())
+                .then(data=>{
+
+                    if(!data.success){
+                        alert(data.message || "Unable to add cart.");
+                        return;
+                    }
+
+                    this.innerHTML='<i class="fas fa-check"></i> Added';
+                    this.classList.add("added");
+
+                    document.querySelectorAll(".cart-count").forEach(function(el){
+                        el.textContent=data.cart_total_items;
+                        el.style.display="inline-block";
+                    });
+
+                    setTimeout(()=>{
+                        btn.innerHTML=original;
+                        btn.classList.remove("added");
+                    },1200);
+
+                })
+                .catch(console.error);
+
+            });
+
+        });
+
+    }
+
+    bindAddToCartButtons();
+
+});
+</script>
+{% endblock %}
+
+
+    
+{% comment %} MOBILE BOTTOM NAV   {% endcomment %}
+
+<div class="mobile-bottom-nav">
+    <a href="#" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+        <span>Category</span>
+    </a>
+
+    <a href="{% url 'product_list' %}">
+        <i class="fa-solid fa-barcode"></i>
+        <span>Products</span>
+    </a>
+    
+    <a href="{% url 'home' %}" class="home-btn">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <a href="{% url 'cart_detail' %}" class="cart-link">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" style="{% if not cart_items_count %}display:none;{% endif %}">{{ cart_items_count }}</span>
+    </a>
+
+    <a href="{% url 'profile' %}">
+        <i class="fas fa-user"></i>
+        <span>Account</span>
+    </a>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}Return Policy | Shuddho{% endblock %}
+
+{% block extra_css %}
+<style>
+
+.policy-wrapper {
+    padding: 25px 0 60px;
+}
+
+.policy-box {
+    background: #ffffff;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 35px 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border: 1px solid #eef2f7;
+}
+
+.policy-title {
+    font-weight: 700;
+    color: #111827;
+}
+
+.policy-intro {
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+.policy-section h5 {
+    font-weight: 600;
+    margin-top: 25px;
+    color: #333;
+}
+
+.policy-section p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.policy-contact {
+    background: #ECECEC;
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 25px;
+    font-weight: 500;
+}
+
+.policy-contact a {
+    color: #16a34a;
+    text-decoration: none;
+}
+
+.policy-contact a:hover {
+    text-decoration: underline;
+}
+
+
+@media(max-width:576px){
+
+    .policy-wrapper{
+        padding:20px 12px 40px;
+    }
+
+    .policy-box{
+        padding:25px 20px;
+        border-radius:10px;
+    }
+
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="policy-wrapper">
+
+    <div class="container">
+
+        <div class="policy-box">
+
+            <h2 class="policy-title mb-3">
+                Return Policy
+            </h2>
+
+
+            <p class="policy-intro">
+                At <strong>Shuddho</strong>, we want our customers to receive
+                products in perfect condition. Please read our return policy
+                carefully before accepting your order.
+            </p>
+
+
+            <div class="policy-section">
+
+
+                <h5>🔍 Product Checking at Delivery</h5>
+                <p>
+                    Customers are requested to check the product carefully while
+                    the delivery person is present. Please verify the product
+                    condition before accepting the delivery.
+                </p>
+
+
+                <h5>📦 Return Conditions</h5>
+                <p>
+                    If the delivered product is damaged, defective, or significantly
+                    different from the displayed product image, you may request a
+                    return according to our return conditions. Applicable courier
+                    charges may apply.
+                </p>
+
+
+                <h5>⏰ Return Time Limit</h5>
+                <p>
+                    Any return request or complaint must be made immediately during
+                    delivery inspection. Once the delivery person leaves, returns
+                    or complaints may not be accepted.
+                </p>
+
+
+                <h5>⚠️ Important Notes</h5>
+                <p>
+                    Products must be returned in their original condition.
+                    Items that are used, damaged by customers, or missing original
+                    packaging may not qualify for return.
+                </p>
+
+
+            </div>
+
+
+            <div class="policy-contact">
+                📞 <a href="tel:+8801852677251">+880 1852-677251</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
