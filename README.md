@@ -228,14 +228,7 @@ Possible enhancements:
 ---
 
 # 👨‍💻 Author
-
-Developed as a **full-stack Django e-commerce project** demonstrating:
-
-* Backend architecture
-* Payment integration
-* Production deployment
-* Production-ready configuration
-
+ Myjobs/Shuddho/ (Almas Forhadi)
 ---
 
 # 📄 License
