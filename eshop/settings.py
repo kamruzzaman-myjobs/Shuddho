@@ -31,7 +31,7 @@ DEBUG = env.bool('DEBUG')
 ALLOWED_HOSTS = [
     "shuddho.net",
     "www.shuddho.net",   
-    "YOUR_VPS_IP",
+    "187.127.214.53",
     "127.0.0.1",
     "localhost",
 ]
