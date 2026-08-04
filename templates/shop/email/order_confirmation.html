@@ -297,7 +297,10 @@ fbq('track', 'Purchase', {
     content_ids: [{% for item in order.order_items.all %}'{{ item.product.id }}'{% if not forloop.last %},{% endif %}{% endfor %}],
     content_type: 'product',
     num_items: {{ order.order_items.count }}
+}, {
+    eventID: 'order_{{ order.id }}'
 });
+    
 </script>
 {% endif %}
 </head>
