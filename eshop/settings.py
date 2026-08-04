@@ -94,7 +94,8 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
+                'django.contrib.auth.context_processors.auth'
+                'shop.context_processors.meta_pixel',
                 'django.contrib.messages.context_processors.messages',
                 # `allauth` needs this from django
                 'shop.context_processors.cart_items_count',
@@ -219,7 +220,8 @@ EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
 ADMIN_EMAIL = env('ADMIN_EMAIL', default=EMAIL_HOST_USER)
 
-
+# Meta pixel setup
+META_PIXEL_ID = env('META_PIXEL_ID', default='')
 
 # EXTRA SECURITY
 SECURE_BROWSER_XSS_FILTER = True

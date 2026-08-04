@@ -1,5 +1,6 @@
 from .models import Cart
 from .models import Category
+from django.conf import settings
 
 
 def cart_items_count(request):
@@ -32,3 +33,9 @@ def category_menu(request):
         'children__children'
     )
     return {'menu_categories': top_categories}
+
+
+
+
+def meta_pixel(request):
+    return {'META_PIXEL_ID': settings.META_PIXEL_ID}
