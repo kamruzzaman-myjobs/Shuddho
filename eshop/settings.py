@@ -94,7 +94,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth'
+                'django.contrib.auth.context_processors.auth',
                 'shop.context_processors.meta_pixel',
                 'django.contrib.messages.context_processors.messages',
                 # `allauth` needs this from django
