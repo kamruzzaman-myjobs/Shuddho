@@ -581,7 +581,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
 {% block extra_js %}
+{{ block.super }}
 <script>
 fbq('track', 'ViewContent', {
     content_name: '{{ product.name|escapejs }}',
@@ -591,7 +593,6 @@ fbq('track', 'ViewContent', {
     currency: 'BDT'
 });
 </script>
-
 {% endblock %}
 
 {% endblock %}
