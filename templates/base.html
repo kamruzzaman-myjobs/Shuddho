@@ -1718,6 +1718,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
+                    fbq('track', 'AddToCart', {
+                        content_ids: [productId],
+                        content_type: 'product',
+                        currency: 'BDT'
+                    });
                     this.innerHTML='<i class="fas fa-check"></i> Added';
                     this.classList.add("added");
 
