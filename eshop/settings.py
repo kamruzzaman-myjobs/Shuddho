@@ -98,6 +98,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'shop.context_processors.meta_pixel',
+                'shop.context_processors.google_analytics',
                 'django.contrib.messages.context_processors.messages',
                 # `allauth` needs this from django
                 'shop.context_processors.cart_items_count',
@@ -224,6 +225,10 @@ ADMIN_EMAIL = env('ADMIN_EMAIL', default=EMAIL_HOST_USER)
 
 # Meta pixel setup
 META_PIXEL_ID = env('META_PIXEL_ID', default='')
+
+# Google Analytics setup
+GA_MEASUREMENT_ID = env('GA_MEASUREMENT_ID', default='')
+
 
 # EXTRA SECURITY
 SECURE_BROWSER_XSS_FILTER = True

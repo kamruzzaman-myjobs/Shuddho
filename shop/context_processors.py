@@ -39,3 +39,7 @@ def category_menu(request):
 
 def meta_pixel(request):
     return {'META_PIXEL_ID': settings.META_PIXEL_ID}
+
+
+def google_analytics(request):
+    return {'GA_MEASUREMENT_ID': settings.GA_MEASUREMENT_ID}
