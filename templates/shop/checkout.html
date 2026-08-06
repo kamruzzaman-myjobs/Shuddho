@@ -387,7 +387,7 @@ background:#f0fff6;
     </div>
 </div>
 
-{% block extra_js %}
+
 <script>
 fbq('track', 'InitiateCheckout', {
     value: {{ cart.get_total_price }},
@@ -395,6 +395,5 @@ fbq('track', 'InitiateCheckout', {
     num_items: {{ cart.get_total_items }}
 });
 </script>
-{% endblock %}
 
 {% endblock %}
